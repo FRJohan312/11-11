@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>11 meses juntitos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #020617;
+      --accent: #f97373;
+      --accent-soft: rgba(248, 113, 113, 0.12);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: rgba(148, 163, 184, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 55%, #020617 100%);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Corazones de fondo */
+    .heart {
+      position: fixed;
+      font-size: 14px;
+      opacity: 0.35;
+      animation: floatUp 12s linear infinite;
+      filter: drop-shadow(0 0 4px rgba(248, 113, 113, 0.8));
+      pointer-events: none;
+    }
+
+    .heart:nth-child(1) { left: 8%;  animation-delay: 0s; }
+    .heart:nth-child(2) { left: 22%; animation-delay: 2.5s; }
+    .heart:nth-child(3) { left: 38%; animation-delay: 5s; }
+    .heart:nth-child(4) { left: 62%; animation-delay: 1.5s; }
+    .heart:nth-child(5) { left: 78%; animation-delay: 4s; }
+    .heart:nth-child(6) { left: 90%; animation-delay: 7s; }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(110vh) scale(0.9);
+        opacity: 0;
+      }
+      10% { opacity: 0.4; }
+      50% { opacity: 0.6; }
+      90% { opacity: 0.2; }
+      100% {
+        transform: translateY(-10vh) scale(1.15);
+        opacity: 0;
+      }
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      background: radial-gradient(circle at top left, #1e293b, #020617 55%);
+      border-radius: 24px;
+      padding: 22px 20px 18px;
+      border: 1px solid var(--border);
+      box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.95),
+        0 0 30px rgba(248, 113, 113, 0.15);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right,
+      rgba(248, 113, 113, 0.14), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .tag-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+    }
+
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .title-main {
+      flex: 1;
+    }
+
+    h1 {
+      font-size: 26px;
+      line-height: 1.1;
+      margin-bottom: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      text-align: right;
+      font-size: 12px;
+      display: inline-flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .pill span:first-child {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    .pill span:last-child {
+      font-weight: 600;
+      color: #f9fafb;
+    }
+
+    .divider {
+      margin: 16px 0 14px;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(148, 163, 184, 0.6),
+        transparent
+      );
+    }
+
+    .intro {
+      font-size: 14px;
+      color: #e5e7eb;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .intro span.name {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .highlight-box {
+      border-radius: 18px;
+      border: 1px solid rgba(248, 113, 113, 0.6);
+      background: linear-gradient(
+        135deg,
+        rgba(248, 113, 113, 0.12),
+        rgba(15, 23, 42, 0.9)
+      );
+      padding: 12px 12px 10px;
+      margin-bottom: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .highlight-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(248, 113, 113, 0.9);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .highlight-title span.symbol {
+      font-size: 13px;
+    }
+
+    .reasons {
+      margin: 10px 0 6px;
+      padding-left: 18px;
+      font-size: 13px;
+      color: #e5e7eb;
+      display: grid;
+      gap: 4px;
+      max-height: 0;
+      overflow: auto;
+      transition: max-height 0.5s ease;
+
+    }
+
+    /* Scroll bonito para la lista */
+.reasons {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(248, 113, 113, 0.45) transparent;
+  padding-right: 6px;
+}
+
+/* Para navegadores basados en WebKit (Android, Chrome, etc.) */
+.reasons::-webkit-scrollbar {
+  width: 6px;
+}
+
+.reasons::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.reasons::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    rgba(248, 113, 113, 0.4),
+    rgba(248, 113, 113, 0.25)
+  );
+  border-radius: 999px;
+}
+
+.reasons::-webkit-scrollbar-thumb:hover {
+  background: rgba(248, 113, 113, 0.55);
+}
+
+/* Difuminado arriba y abajo para que se vea más suave */
+.reasons {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+}
+
+
+    body.open .reasons {
+      max-height: 420px;
+    }
+
+    .reasons li {
+      line-height: 1.5;
+    }
+
+    .footer {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .signature {
+      font-size: 14px;
+      color: #f9fafb;
+      font-weight: 500;
+    }
+
+    .place {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .tulip {
+      font-size: 20px;
+      filter: drop-shadow(0 0 6px rgba(248, 113, 113, 0.9));
+    }
+
+    /* Botón de abrir carta */
+    .button-row {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: linear-gradient(135deg, #f97373, #fb7185);
+      color: #0b1120;
+      box-shadow:
+        0 12px 35px rgba(248, 113, 113, 0.65),
+        0 0 10px rgba(248, 113, 113, 0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+        filter 0.12s ease, opacity 0.3s ease;
+    }
+
+    button span.icon {
+      font-size: 16px;
+    }
+
+    button:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow:
+        0 9px 22px rgba(248, 113, 113, 0.6),
+        0 0 8px rgba(248, 113, 113, 0.6);
+      filter: brightness(0.96);
+    }
+
+    body.open #openBtn {
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    /* Texto oculto que se “despliega” */
+    .hidden-text {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease;
+    }
+
+    body.open .hidden-text {
+      max-height: 500px;
+    }
+
+    .hidden-text-inner {
+      margin-top: 12px;
+      padding: 10px 10px 4px;
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      font-size: 13px;
+      line-height: 1.6;
+      color: #e5e7eb;
+}
+
+    .mini-caption {
+      margin-top: 8px;
+      font-size: 11px;
+      text-align: center;
+      color: var(--muted);
+      opacity: 0.9;
+    }
+
+    @media (max-width: 400px) {
+      .card {
+        padding: 18px 16px 14px;
+        border-radius: 20px;
+      }
+
+      h1 {
+        font-size: 23px;
+      }
+
+      .subtitle {
+        font-size: 13px;
+      }
+
+      button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* --- ESTILO DEL SEGUNDO BOTÓN (NEXT) --- */
+#nextBtnRow button {
+  background: linear-gradient(135deg, #30303a, #3f3f4a);
+  border: 1px solid #555;
+  filter: brightness(0.9);
+  color: #e5e5e5;
+
+  animation: mysteriousBlink 1.8s ease-in-out infinite;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  box-shadow: 0 0 12px rgba(70, 70, 90, 0.4);
+}
+
+#nextBtnRow button:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+  box-shadow: 0 0 18px rgba(110, 110, 140, 0.6);
+}
+
+#nextBtnRow .icon {
+  filter: brightness(1.3) saturate(0.6);
+}
+
+/* Animación: parpadeo sutil + oscurito */
+@keyframes mysteriousBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+  </style>
+</head>
+<body>
+  <!-- Corazones de fondo -->
+  <div class="heart">❤</div>
+  <div class="heart">❤</div>
+  <div class="heart">❤</div>
+  <div class="heart">❤</div>
+  <div class="heart">❤</div>
+  <div class="heart">❤</div>
+
+  <main class="card">
+    <div class="card-inner">
+      <div class="tag">
+        <span class="tag-dot"></span>
+        11 meses juntitos
+      </div>
+
+      <div class="title-row">
+        <div class="title-main">
+          <h1>Hola, mi tulipancito 🌷</h1>
+          <p class="subtitle">
+            Gracias por estos 11 meses, <strong>Mi corazon de melocotón</strong>.
+          </p>
+        </div>
+        <div class="pill">
+          <span>Nosotros</span>
+          <span>tú, yo y un “para siempre”</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="intro">
+        Ni siquiera la distancia, impedirá que podamos celebrar
+        este día tan especial. Te hago esta cartita virtual para ti.
+        Espero, te guste, <span class="name">mamor</span>.
+      </p>
+
+      <div class="highlight-box">
+        <div class="highlight-title">
+          <span class="symbol">💖</span>
+          11 pequeños motivos (de muchos)
+        </div>
+        <p style="margin-bottom: 6px;">
+          No me alcanzan las palabras, pero hoy quiero dejar por escrito
+          al menos algunas de las cosas que amo de ti:
+        </p>
+
+        <ol class="reasons">
+          <li>La forma en que tu sonrisa cambia por completo mi día, aunque estemos lejos.</li>
+          <li>Lo mucho que te esfuerzas por lo que quieres, aunque a veces suelas dudar de ti.</li>
+          <li>Como me escuchas incluso cuando yo mismo no sé ordenar mis emociones.</li>
+          <li>Nuestras conversaciones largas, esas donde el tiempo nos envidia y se va como el viento.</li>
+          <li>Que a pesar de la distancia, sigues haciéndome sentir cerca de tu corazón.</li>
+          <li>Tu manera de afrontar la vida, incluso cuando todo parece ponerse difícil.</li>
+          <li>Los detalles pequeños que tienes conmigo, esos que parecen “nada” y para mí lo son todo.</li>
+          <li>Cómo me haces querer ser mejor persona, novio y futuro esposo.</li>
+          <li>Que sueñas conmigo planes, viajes, días simples… y una vida compartida.</li>
+          <li>Los recuerdos de los lugares importantes para nosotros que los hacen sentir, nuestros.</li>
+          <li>Y sobre todo, que aún con mis defectos, sigues eligiéndome cada día.</li>
+        </ol>
+
+        <div class="hidden-text">
+          <div class="hidden-text-inner">
+            <p>
+              Puede que a veces no sepamos explicarlo todo, ni manejarlo todo perfecto…
+              pero quiero que sepas esto: <strong>yo sigo y seguiré eligiéndote</strong>.
+            </p>
+            <p style="margin-top: 8px;">
+              No eres solo “mi novia”. Eres mi lugar seguro, mi amiga, mi futura esposa,
+              la chica que me hace feliz cada día, mejorar como hombre y la razón por la que vale la pena seguir
+              construyendo, paso a paso, algo bonito y real.
+            </p>
+            <p style="margin-top: 8px;">
+              Gracias por aguantar mis momentos, por quedarte en los días lindos
+              y en los días complicados. No prometo ser perfecto, pero sí prometo
+              seguir trabajando en mí, por mí, por nosotros y por nuestro futuro.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button id="openBtn">
+          <span class="icon">💌</span>
+          <span>Abrir mi carta para ti</span>
+        </button>
+      </div>
+
+      <div class="button-row" id="nextBtnRow" style="display: none; margin-top: 10px;">
+  <button onclick="location.href='index2.html'">
+    <span class="icon">➡️</span>
+    <span>Siguiente parte</span>
+  </button>
+</div>
+
+      <p class="mini-caption">
+        Toca el botón una vez. Lo que está escrito aquí es solo tuyo.
+      </p>
+
+      <div class="footer">
+        <span class="signature">Con amor, Johan.</span>
+        <span class="place">
+          Desde donde esté, pensando en ti… y en nuestra próxima cita. <span class="tulip">🌷</span>
+        </span>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const btn = document.getElementById("openBtn");
+    let opened = false;
+
+    btn.addEventListener("click", () => {
+  if (!opened) {
+    document.body.classList.add("open");
+    opened = true;
+
+    // Mostrar botón de siguiente parte
+    document.getElementById("nextBtnRow").style.display = "flex";
+  }
+});
+
+  </script>
+</body>
+</html>
