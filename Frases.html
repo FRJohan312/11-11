@@ -92,7 +92,7 @@
       color: #ff7fa8;
       font-size: 20px;
       opacity: 0.5;
-      animation: up 6s linear infinite;
+      animation: up 12s linear infinite;
       z-index: 0;
     }
 
@@ -101,6 +101,27 @@
       20% { opacity: .7; }
       100% { transform: translateY(-120vh) scale(1.6); opacity: 0; }
     }
+
+    /* explosión de corazones */
+.explosion-heart {
+  position: absolute;
+  pointer-events: none;
+  color: #ff7fa8;
+  font-size: 18px;
+  opacity: 1;
+  animation: pop 0.9s ease-out forwards;
+  filter: drop-shadow(0 0 6px #ff7fa8);
+}
+
+@keyframes pop {
+  0% { transform: scale(0.3) translate(0,0); opacity: 1; }
+  70% { opacity: .9; }
+  100% { 
+    transform: scale(1.8) translate(var(--x), var(--y));
+    opacity: 0;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -135,7 +156,11 @@
       const icon = document.createElement('div');
       icon.className = 'icon';
       icon.innerHTML = iconos[i];
-      icon.onclick = () => showMessage(i);
+      icon.onclick = () => {
+  explodeAt(icon);
+  showMessage(i);
+};
+
       iconsContainer.appendChild(icon);
     }
 
@@ -144,6 +169,32 @@
       msgBox.classList.add('show');
       setTimeout(() => msgBox.classList.remove('show'), 3200);
     }
+
+    function explodeAt(element) {
+  const rect = element.getBoundingClientRect();
+
+  for (let j = 0; j < 10; j++) {
+    const heart = document.createElement("div");
+    heart.className = "explosion-heart";
+    heart.textContent = "❤";
+
+    // posición inicial
+    heart.style.left = rect.left + rect.width / 2 + "px";
+    heart.style.top = rect.top + rect.height / 2 + "px";
+
+    // dirección aleatoria
+    const angle = Math.random() * 2 * Math.PI;
+    const distance = 60 + Math.random() * 40;
+
+    heart.style.setProperty("--x", Math.cos(angle) * distance + "px");
+    heart.style.setProperty("--y", Math.sin(angle) * distance + "px");
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 900);
+  }
+}
+
 
     // corazones flotando
     function createFloatingHeart() {
