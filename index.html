@@ -639,105 +639,101 @@
   </div>
 
   <script>
-    const btn = document.getElementById("openBtn");
-    let opened = false;
+  const btn = document.getElementById("openBtn");
+  let opened = false;
 
-    const playerBox   = document.getElementById("playerBox");
-    const audio       = document.getElementById("audioPlayer");
-    const playBtn     = document.getElementById("playPauseBtn");
-    const prevBtn     = document.getElementById("prevBtn");
-    const nextBtn     = document.getElementById("nextBtn");
-    const progressBar = document.getElementById("progressBar");
-    const titleBox    = document.getElementById("musicTitle");
+  const playerBox   = document.getElementById("playerBox");
+  const audio       = document.getElementById("audioPlayer");
+  const playBtn     = document.getElementById("playPauseBtn");
+  const prevBtn     = document.getElementById("prevBtn");
+  const nextBtn     = document.getElementById("nextBtn");
+  const progressBar = document.getElementById("progressBar");
+  const titleBox    = document.getElementById("musicTitle");
 
-    let playlist = [];
-    let currentSong = 0;
-    let playlistLoaded = false;
+  // -------------------------------
+  // 🎵 PLAYLIST LOCAL
+  // -------------------------------
+  const playlist = [
+    { title: "Canción 1 – Nuestra noche", file: "music/cancion1.mp3" },
+    { title: "Canción 2 – Pensando en ti", file: "music/cancion2.mp3" },
+    { title: "Canción 3 – Momentos juntos", file: "music/cancion3.mp3" }
+  ];
 
-    async function loadPlaylist() {
-      if (playlistLoaded) return;
-      try {
-        const res = await fetch("playlist.json");
-        const data = await res.json();
-        if (!Array.isArray(data) || data.length === 0) {
-          console.error("Playlist vacía o incorrecta");
-          return;
-        }
-        playlist = data;
-        playlistLoaded = true;
-        setSong(0);
-      } catch (err) {
-        console.error("Error cargando playlist:", err);
-      }
-    }
+  let currentSong = 0;
 
-    function setSong(index) {
-      if (!playlist.length) return;
-      currentSong = (index + playlist.length) % playlist.length;
-      const song = playlist[currentSong];
+  // -------------------------------
+  // 🔊 FUNCIONES DEL REPRODUCTOR
+  // -------------------------------
 
-      audio.src = song.file;
-      titleBox.textContent = song.title || "Canción";
-      audio.currentTime = 0;
+  function setSong(index) {
+    currentSong = (index + playlist.length) % playlist.length;
+    const song = playlist[currentSong];
 
-      audio.play().then(() => {
-        playBtn.textContent = "⏸";
-      }).catch(() => {
-        playBtn.textContent = "▶";
-      });
-    }
+    audio.src = song.file;
+    titleBox.textContent = song.title;
+    audio.currentTime = 0;
 
-    function togglePlay() {
-      if (!playlist.length) return;
-      if (audio.paused) {
-        audio.play();
-        playBtn.textContent = "⏸";
-      } else {
-        audio.pause();
-        playBtn.textContent = "▶";
-      }
-    }
-
-    function nextSong() {
-      if (!playlist.length) return;
-      setSong(currentSong + 1);
-    }
-
-    function prevSong() {
-      if (!playlist.length) return;
-      setSong(currentSong - 1);
-    }
-
-    audio.addEventListener("timeupdate", () => {
-      if (!audio.duration) return;
-      const progress = (audio.currentTime / audio.duration) * 100;
-      progressBar.value = progress;
+    audio.play().then(() => {
+      playBtn.textContent = "⏸";
+    }).catch(() => {
+      playBtn.textContent = "▶";
     });
+  }
 
-    progressBar.addEventListener("input", () => {
-      if (!audio.duration) return;
-      audio.currentTime = (progressBar.value / 100) * audio.duration;
-    });
+  function togglePlay() {
+    if (audio.paused) {
+      audio.play();
+      playBtn.textContent = "⏸";
+    } else {
+      audio.pause();
+      playBtn.textContent = "▶";
+    }
+  }
 
-    audio.addEventListener("ended", nextSong);
+  function nextSong() { setSong(currentSong + 1); }
+  function prevSong() { setSong(currentSong - 1); }
 
-    playBtn.addEventListener("click", togglePlay);
-    nextBtn.addEventListener("click", nextSong);
-    prevBtn.addEventListener("click", prevSong);
+  // -------------------------------
+  // ⏳ PROGRESO
+  // -------------------------------
 
-    btn.addEventListener("click", async () => {
-      if (opened) return;
-      opened = true;
+  audio.addEventListener("timeupdate", () => {
+    if (!audio.duration) return;
+    progressBar.value = (audio.currentTime / audio.duration) * 100;
+  });
 
-      document.body.classList.add("open");
-      document.getElementById("nextBtnRow").style.display = "flex";
+  progressBar.addEventListener("input", () => {
+    if (!audio.duration) return;
+    audio.currentTime = (progressBar.value / 100) * audio.duration;
+  });
 
-      // mostrar reproductor
-      playerBox.style.display = "flex";
+  audio.addEventListener("ended", nextSong);
 
-      // cargar playlist y primera canción
-      await loadPlaylist();
-    });
-  </script>
+  // -------------------------------
+  // 🎛 BOTONES
+  // -------------------------------
+
+  playBtn.addEventListener("click", togglePlay);
+  nextBtn.addEventListener("click", nextSong);
+  prevBtn.addEventListener("click", prevSong);
+
+  // -------------------------------
+  // 🚀 AL ABRIR EL REPRODUCTOR
+  // -------------------------------
+
+  btn.addEventListener("click", () => {
+    if (opened) return;
+    opened = true;
+
+    document.body.classList.add("open");
+    document.getElementById("nextBtnRow").style.display = "flex";
+
+    playerBox.style.display = "flex";
+
+    // cargar primera canción
+    setSong(0);
+  });
+</script>
+
 </body>
 </html>
