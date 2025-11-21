@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>11 Meses ♥</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0d0a1a;
+      font-family: "Poppins", sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+      color: white;
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 15px;
+      text-align: center;
+      color: #ff9bbf;
+      text-shadow: 0 0 12px #ff4d6d;
+      animation: softPulse 3s ease-in-out infinite;
+      padding: 0 15px;
+    }
+
+    @keyframes softPulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+
+    .icons-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      width: 90%;
+      max-width: 360px;
+      z-index: 2;
+    }
+
+    .icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 110, 150, 0.18);
+      border: 1px solid rgba(255, 110, 150, 0.4);
+      backdrop-filter: blur(4px);
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+      cursor: pointer;
+      transition: transform .3s ease, box-shadow .3s ease;
+      box-shadow: 0 6px 14px rgba(255, 80, 140, 0.35);
+    }
+
+    .icon:hover {
+      transform: scale(1.12);
+      box-shadow: 0 8px 18px rgba(255,80,140,0.45);
+    }
+
+    .msg {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: rgba(255, 110, 150, 0.9);
+      text-align: center;
+      font-size: 1.15rem;
+      padding: 15px;
+      color: white;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      transform: translateY(100%);
+      transition: transform .4s ease;
+      z-index: 5;
+    }
+
+    .msg.show {
+      transform: translateY(0);
+    }
+
+    /* corazones flotando */
+    .float-heart {
+      position: fixed;
+      bottom: -30px;
+      color: #ff7fa8;
+      font-size: 20px;
+      opacity: 0.5;
+      animation: up 6s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes up {
+      0% { transform: translateY(0) scale(.8); opacity: 0; }
+      20% { opacity: .7; }
+      100% { transform: translateY(-120vh) scale(1.6); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>11 meses contigo, mi amor ❤️</h1>
+
+  <div class="icons-container" id="icons"></div>
+
+  <div class="msg" id="msg"></div>
+
+  <script>
+    const mensajes = [
+      "Me gusta la forma en que me miras... Incluso cuando no digo nada. 💗",
+      "Contigo todo es más lindo, más tranquilo, más hermoso. 💖",
+      "Gracias por siempre estar a mi lado. 💘",
+      "Te elegiría mil veces, incluso en mis días difíciles. 💝",
+      "Gracias por seguir conmigo, incluso cuando yo mismo no me siento bien... 💕",
+      "Eres mi tulipán favorito. Siempre. 🌷",
+      "Tus abrazos son mi lugar seguro. 💓",
+      "Gracias por hacerme sentir amado incluso en el silencio. 💞",
+      "Cada día contigo vale la pena. 💟",
+      "Eres la parte más bonita de mis días. 🌸",
+      "Te amo más de lo que mis palabras pueden a decir. ❤️"
+    ];
+
+    const iconsContainer = document.getElementById('icons');
+    const msgBox = document.getElementById('msg');
+
+    const iconos = ["💗","💖","💘","💝","💕","🌷","💓","💞","💟","🌸","❤️"];
+
+    for (let i = 0; i < 11; i++) {
+      const icon = document.createElement('div');
+      icon.className = 'icon';
+      icon.innerHTML = iconos[i];
+      icon.onclick = () => showMessage(i);
+      iconsContainer.appendChild(icon);
+    }
+
+    function showMessage(i) {
+      msgBox.textContent = mensajes[i];
+      msgBox.classList.add('show');
+      setTimeout(() => msgBox.classList.remove('show'), 3200);
+    }
+
+    // corazones flotando
+    function createFloatingHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'float-heart';
+      heart.textContent = '❤';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (18 + Math.random() * 22) + 'px';
+      heart.style.animationDuration = (5 + Math.random() * 4) + 's';
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 7000);
+    }
+
+    setInterval(createFloatingHeart, 500);
+  </script>
+</body>
+</html>
