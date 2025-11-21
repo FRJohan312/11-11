@@ -67,59 +67,104 @@
     }
 
     /* Reproductor de música */
-    .music-player {
-      position: fixed;
-      bottom: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255, 110, 150, 0.22);
-      border: 1px solid rgba(255, 110, 150, 0.45);
-      backdrop-filter: blur(6px);
-      padding: 10px 14px;
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 6px 15px rgba(255, 90, 140, 0.35);
-      display: none;
-      z-index: 10;
-    }
+.music-player {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 110, 150, 0.18);
+  border: 1px solid rgba(255, 110, 150, 0.35);
+  backdrop-filter: blur(10px);
+  padding: 12px 16px;
+  border-radius: 18px;
 
-    .music-player button {
-      background: rgba(255, 110, 150, 0.3);
-      border: 1px solid rgba(255, 110, 150, 0.6);
-      color: white;
-      padding: 6px 10px;
-      font-size: 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: .25s;
-    }
+  display: flex;
+  align-items: center;
+  gap: 14px;
 
-    .music-player button:hover {
-      transform: scale(1.12);
-    }
+  box-shadow: 0 4px 16px rgba(255, 90, 140, 0.25);
+  display: none;
+  z-index: 10;
 
-    .progress-container {
-      flex-grow: 1;
-    }
+  animation: slideUp .6s ease forwards;
+}
 
-    #progressBar {
-      width: 100%;
-      height: 5px;
-      border-radius: 8px;
-      background: #ff7ea9;
-      cursor: pointer;
-    }
+/* Animación al aparecer */
+@keyframes slideUp {
+  from { transform: translate(-50%, 20px); opacity: 0; }
+  to   { transform: translate(-50%, 0); opacity: 1; }
+}
 
-    .music-title {
-      font-size: 11px;
-      color: #fdf2f8;
-      max-width: 110px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+/* Botones */
+.music-player button {
+  background: rgba(255, 110, 150, 0.28);
+  border: 1px solid rgba(255, 110, 150, 0.55);
+  color: white;
+
+  padding: 6px 12px;
+  font-size: 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform .25s, background .25s;
+
+  box-shadow: 0 2px 6px rgba(255, 100, 150, 0.25);
+}
+
+/* Iconos más suaves al presionar */
+.music-player button:active {
+  transform: scale(0.85);
+}
+
+/* Barra de progreso */
+.progress-container {
+  flex-grow: 1;
+}
+
+#progressBar {
+  width: 100%;
+  height: 6px;
+  border-radius: 12px;
+  background: rgba(255,120,150,0.55);
+  cursor: pointer;
+
+  appearance: none;
+  outline: none;
+}
+
+/* Estilo del thumb (puntito de arrastre) */
+#progressBar::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffb3d4;
+  box-shadow: 0 0 6px rgba(255,180,220,0.8);
+  cursor: pointer;
+  transition: .2s;
+}
+
+#progressBar::-webkit-slider-thumb:active {
+  transform: scale(1.25);
+}
+
+/* Título */
+.music-title {
+  font-size: 12px;
+  color: #ffe5f0;
+  max-width: 120px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  animation: fadeIn .8s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: translateY(0px); }
+}
+
 
     .card {
       position: relative;
