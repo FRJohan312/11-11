@@ -14,9 +14,9 @@ const coverImg    = document.getElementById("coverImg");
 // 🎵 PLAYLIST LOCAL
 // -------------------------------
 const playlist = [
-  { title: "Canción 1 – Nuestra noche", file: "music/cancion1.mp3", cover: "music/cover1.jpg" },
-  { title: "Canción 2 – Pensando en ti", file: "music/cancion2.mp3", cover: "music/cover2.jpg" },
-  { title: "Canción 3 – Momentos juntos", file: "music/cancion3.mp3", cover: "music/cover3.jpg" }
+  { title: "Golden Hour", file: "music/cancion1.mp3", cover: "music/cover1.jpeg" },
+  { title: "Golden Hours", file: "music/cancion2.mp3", cover: "music/cover2.png" },
+  { title: "Te amo 💖", file: "music/cancion3.mp3", cover: "music/cover3.png" }
 ];
 
 let currentSong = 0;

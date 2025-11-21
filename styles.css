@@ -113,15 +113,15 @@
   position: relative;
   width: 38px;
   height: 38px;
-  border-radius: 14px;
-  overflow: hidden;
+  border-radius: 25px;
+  overflow:hidden;
   box-shadow: 0 0 14px rgba(248, 113, 113, 0.7);
 }
 
 .cover-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 50%;
+  height: 50%;
+  object-fit:fill;
   transform-origin: center;
   transition: transform 0.35s ease;
 }
@@ -166,7 +166,7 @@
   font-size: 11px;
   color: #fdf2f8;
   max-width: 120px;
-  white-space: nowrap;
+  white-space:initial;
   overflow: hidden;
   text-overflow: ellipsis;
   letter-spacing: 0.03em;
