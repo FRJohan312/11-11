@@ -66,6 +66,61 @@
       }
     }
 
+    /* Reproductor de música */
+    .music-player {
+      position: fixed;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 110, 150, 0.22);
+      border: 1px solid rgba(255, 110, 150, 0.45);
+      backdrop-filter: blur(6px);
+      padding: 10px 14px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 6px 15px rgba(255, 90, 140, 0.35);
+      display: none;
+      z-index: 10;
+    }
+
+    .music-player button {
+      background: rgba(255, 110, 150, 0.3);
+      border: 1px solid rgba(255, 110, 150, 0.6);
+      color: white;
+      padding: 6px 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .music-player button:hover {
+      transform: scale(1.12);
+    }
+
+    .progress-container {
+      flex-grow: 1;
+    }
+
+    #progressBar {
+      width: 100%;
+      height: 5px;
+      border-radius: 8px;
+      background: #ff7ea9;
+      cursor: pointer;
+    }
+
+    .music-title {
+      font-size: 11px;
+      color: #fdf2f8;
+      max-width: 110px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     .card {
       position: relative;
       width: 100%;
@@ -228,49 +283,35 @@
       max-height: 0;
       overflow: auto;
       transition: max-height 0.5s ease;
-
+      scrollbar-width: thin;
+      scrollbar-color: rgba(248, 113, 113, 0.45) transparent;
+      padding-right: 6px;
+      mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        black 12%,
+        black 88%,
+        transparent
+      );
     }
 
-    /* Scroll bonito para la lista */
-.reasons {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(248, 113, 113, 0.45) transparent;
-  padding-right: 6px;
-}
-
-/* Para navegadores basados en WebKit (Android, Chrome, etc.) */
-.reasons::-webkit-scrollbar {
-  width: 6px;
-}
-
-.reasons::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.reasons::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    to bottom,
-    rgba(248, 113, 113, 0.4),
-    rgba(248, 113, 113, 0.25)
-  );
-  border-radius: 999px;
-}
-
-.reasons::-webkit-scrollbar-thumb:hover {
-  background: rgba(248, 113, 113, 0.55);
-}
-
-/* Difuminado arriba y abajo para que se vea más suave */
-.reasons {
-  mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    black 12%,
-    black 88%,
-    transparent
-  );
-}
-
+    .reasons::-webkit-scrollbar {
+      width: 6px;
+    }
+    .reasons::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .reasons::-webkit-scrollbar-thumb {
+      background: linear-gradient(
+        to bottom,
+        rgba(248, 113, 113, 0.4),
+        rgba(248, 113, 113, 0.25)
+      );
+      border-radius: 999px;
+    }
+    .reasons::-webkit-scrollbar-thumb:hover {
+      background: rgba(248, 113, 113, 0.55);
+    }
 
     body.open .reasons {
       max-height: 420px;
@@ -350,7 +391,7 @@
       pointer-events: none;
     }
 
-    /* Texto oculto que se “despliega” */
+    /* Texto oculto */
     .hidden-text {
       max-height: 0;
       overflow: hidden;
@@ -370,7 +411,7 @@
       font-size: 13px;
       line-height: 1.6;
       color: #e5e7eb;
-}
+    }
 
     .mini-caption {
       margin-top: 8px;
@@ -400,37 +441,36 @@
       }
     }
 
-    /* --- ESTILO DEL SEGUNDO BOTÓN (NEXT) --- */
-#nextBtnRow button {
-  background: linear-gradient(135deg, #30303a, #3f3f4a);
-  border: 1px solid #555;
-  filter: brightness(0.9);
-  color: #e5e5e5;
+    /* Estilo segundo botón (NEXT) */
+    #nextBtnRow button {
+      background: linear-gradient(135deg, #30303a, #3f3f4a);
+      border: 1px solid #555;
+      filter: brightness(0.9);
+      color: #e5e5e5;
+      animation: mysteriousBlink 1.8s ease-in-out infinite;
+      transition: transform 0.25s ease, filter 0.25s ease;
+      box-shadow: 0 0 12px rgba(70, 70, 90, 0.4);
+    }
 
-  animation: mysteriousBlink 1.8s ease-in-out infinite;
-  transition: transform 0.25s ease, filter 0.25s ease;
-  box-shadow: 0 0 12px rgba(70, 70, 90, 0.4);
-}
+    #nextBtnRow button:hover {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+      box-shadow: 0 0 18px rgba(110, 110, 140, 0.6);
+    }
 
-#nextBtnRow button:hover {
-  transform: scale(1.05);
-  filter: brightness(1.1);
-  box-shadow: 0 0 18px rgba(110, 110, 140, 0.6);
-}
+    #nextBtnRow .icon {
+      filter: brightness(1.3) saturate(0.6);
+    }
 
-#nextBtnRow .icon {
-  filter: brightness(1.3) saturate(0.6);
-}
-
-/* Animación: parpadeo sutil + oscurito */
-@keyframes mysteriousBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.55; }
-}
+    @keyframes mysteriousBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.55; }
+    }
 
   </style>
 </head>
 <body>
+  
   <!-- Corazones de fondo -->
   <div class="heart">❤</div>
   <div class="heart">❤</div>
@@ -458,7 +498,7 @@
           <span>tú, yo y un “para siempre”</span>
         </div>
       </div>
-
+      
       <div class="divider"></div>
 
       <p class="intro">
@@ -519,11 +559,11 @@
       </div>
 
       <div class="button-row" id="nextBtnRow" style="display: none; margin-top: 10px;">
-  <button onclick="location.href='Frases.html'">
-    <span class="icon">✨</span>
-    <span>Siguiente parte</span>
-  </button>
-</div>
+        <button onclick="location.href='Frases.html'">
+          <span class="icon">✨</span>
+          <span>11 fracesitas para ti</span>
+        </button>
+      </div>
 
       <p class="mini-caption">
         Toca el botón una vez. Lo que está escrito aquí es solo tuyo.
@@ -538,20 +578,121 @@
     </div>
   </main>
 
+  <!-- Reproductor de música -->
+  <div class="music-player" id="playerBox">
+    <button id="prevBtn">⏮</button>
+    <button id="playPauseBtn">▶</button>
+    <button id="nextBtn">⏭</button>
+
+    <div class="progress-container">
+      <input type="range" id="progressBar" value="0" min="0" max="100">
+    </div>
+
+    <span id="musicTitle" class="music-title">Canción</span>
+
+    <audio id="audioPlayer"></audio>
+  </div>
+
   <script>
     const btn = document.getElementById("openBtn");
     let opened = false;
 
-    btn.addEventListener("click", () => {
-  if (!opened) {
-    document.body.classList.add("open");
-    opened = true;
+    const playerBox   = document.getElementById("playerBox");
+    const audio       = document.getElementById("audioPlayer");
+    const playBtn     = document.getElementById("playPauseBtn");
+    const prevBtn     = document.getElementById("prevBtn");
+    const nextBtn     = document.getElementById("nextBtn");
+    const progressBar = document.getElementById("progressBar");
+    const titleBox    = document.getElementById("musicTitle");
 
-    // Mostrar botón de siguiente parte
-    document.getElementById("nextBtnRow").style.display = "flex";
-  }
-});
+    let playlist = [];
+    let currentSong = 0;
+    let playlistLoaded = false;
 
+    async function loadPlaylist() {
+      if (playlistLoaded) return;
+      try {
+        const res = await fetch("playlist.json");
+        const data = await res.json();
+        if (!Array.isArray(data) || data.length === 0) {
+          console.error("Playlist vacía o incorrecta");
+          return;
+        }
+        playlist = data;
+        playlistLoaded = true;
+        setSong(0);
+      } catch (err) {
+        console.error("Error cargando playlist:", err);
+      }
+    }
+
+    function setSong(index) {
+      if (!playlist.length) return;
+      currentSong = (index + playlist.length) % playlist.length;
+      const song = playlist[currentSong];
+
+      audio.src = song.file;
+      titleBox.textContent = song.title || "Canción";
+      audio.currentTime = 0;
+
+      audio.play().then(() => {
+        playBtn.textContent = "⏸";
+      }).catch(() => {
+        playBtn.textContent = "▶";
+      });
+    }
+
+    function togglePlay() {
+      if (!playlist.length) return;
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = "⏸";
+      } else {
+        audio.pause();
+        playBtn.textContent = "▶";
+      }
+    }
+
+    function nextSong() {
+      if (!playlist.length) return;
+      setSong(currentSong + 1);
+    }
+
+    function prevSong() {
+      if (!playlist.length) return;
+      setSong(currentSong - 1);
+    }
+
+    audio.addEventListener("timeupdate", () => {
+      if (!audio.duration) return;
+      const progress = (audio.currentTime / audio.duration) * 100;
+      progressBar.value = progress;
+    });
+
+    progressBar.addEventListener("input", () => {
+      if (!audio.duration) return;
+      audio.currentTime = (progressBar.value / 100) * audio.duration;
+    });
+
+    audio.addEventListener("ended", nextSong);
+
+    playBtn.addEventListener("click", togglePlay);
+    nextBtn.addEventListener("click", nextSong);
+    prevBtn.addEventListener("click", prevSong);
+
+    btn.addEventListener("click", async () => {
+      if (opened) return;
+      opened = true;
+
+      document.body.classList.add("open");
+      document.getElementById("nextBtnRow").style.display = "flex";
+
+      // mostrar reproductor
+      playerBox.style.display = "flex";
+
+      // cargar playlist y primera canción
+      await loadPlaylist();
+    });
   </script>
 </body>
 </html>
